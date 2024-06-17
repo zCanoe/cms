@@ -1,8 +1,14 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>app</div>
-  <RouterView></RouterView>
+  <div id="app">
+    <RouterView></RouterView>
+  </div>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+#app {
+  height: 100vh;
+  width: 100vw;
+}
+</style>
