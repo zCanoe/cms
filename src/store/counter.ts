@@ -5,7 +5,7 @@ export default defineStore("counter", {
     count: 100,
   }),
   getters: {
-    getDoubleCount() {
+    getDoubleCount(): number {
       return this.count << 1;
     },
   },
