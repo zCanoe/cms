@@ -1,6 +1,6 @@
 let BASE_URL = "";
 if (import.meta.env.DEV) {
-  BASE_URL = "http://codercba.com:8000" as const;
+  BASE_URL = "/api" as const;
 } else {
   BASE_URL = "http://codercba.com:8000" as const;
 }

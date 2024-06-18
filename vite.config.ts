@@ -13,6 +13,20 @@ import {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      "^/api": {
+        target: "http://123.207.32.32:8000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        configure: (proxy, options) => {
+          proxy.on("proxyReq", (proxyReq, req, res) => {
+            console.log(`Proxying request: ${req.url} -> ${proxyReq.path}`);
+          });
+        },
+      },
+    },
+  },
   plugins: [
     vue(),
     VueDevTools(),
