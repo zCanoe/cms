@@ -1,12 +1,18 @@
 import HYRequest from "./request";
 import { BASE_URL, TIME_OUT1 } from "./config";
+import { useLoginStore } from "@/store/login/login";
+import router from "@/router";
 
 const hyRequest = new HYRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT1,
   interceptors: {
     requestInterceptor: (config) => {
-      console.log("实例请求成功拦截");
+      if (config.headers && useLoginStore().token) {
+        config.headers.Authorization = useLoginStore().token;
+      } else {
+        router.push("/login");
+      }
       return config;
     },
     requestInterceptorCatch: (err) => {

@@ -16,12 +16,13 @@ export default defineConfig({
   server: {
     proxy: {
       "^/api": {
-        target: "http://123.207.32.32:8000",
+        target: "http://codercba.com:5000",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
         configure: (proxy, options) => {
           proxy.on("proxyReq", (proxyReq, req, res) => {
-            console.log(`Proxying request: ${req.url} -> ${proxyReq.path}`);
+            const targetUrl = new URL(proxyReq.path, options.target as string);
+            console.log(`Proxying request: ${req.url} -> ${targetUrl.href}`);
           });
         },
       },

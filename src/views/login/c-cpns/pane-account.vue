@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { reactive, ref, toRaw } from "vue";
+import { onMounted, reactive, type Ref, ref, toRaw, type UnwrapRef } from "vue";
 import { ElMessage, type FormInstance, type FormRules } from "element-plus";
-import { accountLoginRequest } from "@/service/login/login";
+import { useLoginStore } from "@/store/login/login";
+import type { IAccount } from "../../../../env";
+import { localCache } from "@/utils/cache";
 
-const form = reactive({
-  name: "",
-  pwd: "",
+enum ACCOUNT_ENUM {
+  CACHE_NAME = "name",
+  CACHE_PWD = "pwd",
+}
+
+onMounted(() => {
+  console.log(useLoginStore().token);
+});
+
+const form = reactive<IAccount>({
+  name: localCache.get(ACCOUNT_ENUM.CACHE_NAME),
+  pwd: localCache.get(ACCOUNT_ENUM.CACHE_PWD),
 });
 const rules = reactive<FormRules<typeof form>>({
   name: [
@@ -32,14 +43,22 @@ const rules = reactive<FormRules<typeof form>>({
 });
 const ruleFormRef = ref<FormInstance>();
 
-function loginAction() {
+function loginAction(isRemPwd: Ref<UnwrapRef<boolean>>) {
   ruleFormRef.value?.validate((valid) => {
     if (valid) {
       console.log(toRaw(form));
-      accountLoginRequest(toRaw(form)).then((res) => {});
-      console.log("success");
+      useLoginStore()
+        .loginAccountAction(toRaw(form))
+        .then(() => {
+          if (isRemPwd.value) {
+            localCache.set(ACCOUNT_ENUM.CACHE_NAME, form.name);
+            localCache.set(ACCOUNT_ENUM.CACHE_PWD, form.pwd);
+          } else {
+            localCache.remove(ACCOUNT_ENUM.CACHE_NAME);
+            localCache.remove(ACCOUNT_ENUM.CACHE_PWD);
+          }
+        });
     } else {
-      console.log("fail");
       ElMessage({
         message: "Oops, account or password is error!",
         type: "error",

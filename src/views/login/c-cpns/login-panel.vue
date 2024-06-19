@@ -1,16 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, toRaw, watch } from "vue";
 import PaneAccount from "@/views/login/c-cpns/pane-account.vue";
 import PanePhone from "@/views/login/c-cpns/pane-phone.vue";
+import { localCache } from "@/utils/cache";
 
-const isRemPwd = ref<boolean>(false);
+enum LOGIN_ENUM {
+  REM = "isRemPwd",
+}
+
+const isRemPwd = ref<boolean>(localCache.get(LOGIN_ENUM.REM) ?? false);
 const currentTab = ref("0");
 const accountRef = ref<InstanceType<typeof PaneAccount>>();
+
+watch(isRemPwd, (nv) => {
+  console.log(nv);
+  localCache.set(LOGIN_ENUM.REM, nv);
+});
 
 function handleLoginBtn() {
   switch (currentTab.value) {
     case "0":
-      accountRef.value?.loginAction();
+      accountRef.value?.loginAction(isRemPwd);
       console.log("账号登陆");
       break;
     case "1":

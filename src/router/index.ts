@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import { useLoginStore } from "@/store/login/login";
 
-export default createRouter({
+const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
@@ -21,3 +22,11 @@ export default createRouter({
     },
   ],
 });
+
+// 导航守卫
+router.beforeEach((to, from) => {
+  if (to.path === "/main" && !useLoginStore().token) {
+    return "/login";
+  }
+});
+export default router;
