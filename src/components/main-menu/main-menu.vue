@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { useLoginStore } from "@/store/login/login";
 
+defineProps({
+  isCollapse: {
+    type: Boolean,
+    default: false,
+  },
+});
 const userMenu = useLoginStore().userMenu;
 </script>
 
@@ -8,7 +14,7 @@ const userMenu = useLoginStore().userMenu;
   <div class="main-menu">
     <div class="logo">
       <img class="img" src="@/assets/img/logo.svg" />
-      <div class="title">cms</div>
+      <div v-show="!isCollapse" class="title">cms</div>
     </div>
     <el-menu
       text-color="#b7bdc3"
@@ -16,6 +22,7 @@ const userMenu = useLoginStore().userMenu;
       background-color="#001529"
       default-active="3"
       class="el-menu-vertical-demo"
+      :collapse="isCollapse"
     >
       <template v-for="item in userMenu" :key="item.id">
         <el-sub-menu :index="`${item.id}`">
