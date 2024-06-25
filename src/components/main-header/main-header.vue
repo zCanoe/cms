@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import HeaderInfo from "@/components/main-header/c-cpns/header-info.vue";
+import HeadCrumb from "@/components/main-header/c-cpns/head-crumb.vue";
 
 const foldChange = defineEmits<{
   (e: "fold-change", value: boolean): void;
@@ -21,7 +22,9 @@ function handleFoldChange() {
       </el-icon>
     </div>
     <div class="content">
-      <div class="breadcrumb">面包屑</div>
+      <div class="breadcrumb">
+        <head-crumb />
+      </div>
       <div class="info">
         <header-info />
       </div>

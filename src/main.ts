@@ -11,13 +11,7 @@ import { createPersistedState } from "pinia-plugin-persistedstate";
 
 const app = createApp(App);
 
-pinia.use(
-  createPersistedState({
-    storage: localStorage,
-  }),
-);
-
-app.use(router);
 app.use(pinia);
+app.use(router);
 app.use(registerIcons);
 app.mount("#app");

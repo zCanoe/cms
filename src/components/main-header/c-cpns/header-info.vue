@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  ChatDotRound,
-  InfoFilled,
-  Lock,
-  Message,
-  Remove,
-  Search,
-} from "@element-plus/icons-vue";
+import { ChatDotRound, InfoFilled, Lock, Message, Remove, Search } from "@element-plus/icons-vue";
 </script>
 
 <template>

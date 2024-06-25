@@ -63,11 +63,7 @@ function handleLoginBtn() {
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large" />
       <el-link type="primary">忘记密码</el-link>
     </div>
-    <el-button
-      class="login-btn"
-      size="large"
-      type="primary"
-      @click="handleLoginBtn"
+    <el-button class="login-btn" size="large" type="primary" @click="handleLoginBtn"
       >立即登陆
     </el-button>
   </div>

@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { useLoginStore } from "@/store/login/login";
+import router from "@/router";
+import { computed, ref } from "vue";
+import { mapPathToMenu } from "@/utils/map-menus";
+import { useRoute, useRouter } from "vue-router";
 
 defineProps({
   isCollapse: {
@@ -8,6 +12,13 @@ defineProps({
   },
 });
 const userMenu = useLoginStore().userMenu;
+const route = useRoute();
+const defaultActive = computed<string>(() => mapPathToMenu(route.path, userMenu));
+console.log(defaultActive.value);
+
+function handleMenuClick(sub) {
+  router.push(sub.url);
+}
 </script>
 
 <template>
@@ -20,9 +31,9 @@ const userMenu = useLoginStore().userMenu;
       text-color="#b7bdc3"
       active-text-color="#fff"
       background-color="#001529"
-      default-active="3"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
+      :default-active="defaultActive"
     >
       <template v-for="item in userMenu" :key="item.id">
         <el-sub-menu :index="`${item.id}`">
@@ -33,7 +44,7 @@ const userMenu = useLoginStore().userMenu;
             <span>{{ item.name }}</span>
           </template>
           <template v-for="subItem in item.children" :key="subItem.id">
-            <el-menu-item :index="`${subItem.id}`"
+            <el-menu-item :index="`${subItem.id}`" @click="handleMenuClick(subItem)"
               >{{ subItem.name }}
             </el-menu-item>
           </template>
