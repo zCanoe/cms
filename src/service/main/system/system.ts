@@ -1,11 +1,15 @@
 import hyRequest from "@/service";
 
-export function postUsersListData() {
+export function postUsersListData(data: any) {
   return hyRequest.post({
     url: "/users/list",
-    data: {
-      offset: 0,
-      size: 10,
-    },
+    data,
+  });
+}
+
+export function deleteUserByid(id: number) {
+  return hyRequest.request({
+    url: `/users/${id}`,
+    method: "delete",
   });
 }

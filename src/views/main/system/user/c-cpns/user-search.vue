@@ -9,14 +9,18 @@ const searchForm = reactive({
   enable: 1,
   createAt: "",
 });
+const emits = defineEmits(["searchClick", "resetClick"]);
 // 此处如果用 elForm 会触发bug
 const elForms = ref<InstanceType<typeof ElForm>>();
 
 function handleResetClick() {
   elForms.value?.resetFields();
+  emits("resetClick", () => {});
 }
 
-function handleSearchClick() {}
+function handleSearchClick() {
+  emits("searchClick", searchForm);
+}
 </script>
 
 <template>
