@@ -18,9 +18,7 @@ const props = defineProps<prop>();
 // 此处如果用 elForm 会触发bug
 const elForms = ref<InstanceType<typeof ElForm>>();
 // 根据传入的config生成form
-const searchForm = computed(() =>
-  props.searchConfig.reduce((pre, cur) => (pre[cur.name] = ""), {}),
-);
+const searchForm = reactive(props.searchConfig.reduce((pre, cur) => (pre[cur.name] = ""), {}));
 
 function handleResetClick() {
   elForms.value?.resetFields();
