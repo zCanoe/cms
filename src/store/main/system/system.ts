@@ -1,5 +1,10 @@
 import { defineStore } from "pinia";
-import { deleteUserByid, postUsersListData } from "@/service/main/system/system";
+import {
+  deleteUserByid,
+  editUserData,
+  newUserAdd,
+  postUsersListData,
+} from "@/service/main/system/system";
 
 interface ISystem {
   usersList: any[];
@@ -19,6 +24,12 @@ export const useSystemStore = defineStore("system", {
     },
     async deleteUserById(id: number, index: number) {
       await deleteUserByid(id);
+    },
+    async newUserDataAction(data: any) {
+      await newUserAdd(data);
+    },
+    async editUserAction(id: number, data: any) {
+      await editUserData(id, data);
     },
   },
 });

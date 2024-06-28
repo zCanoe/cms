@@ -1,8 +1,8 @@
 <template>
   <div class="user">
     <user-search @reset-click="resetClick" @search-click="searchClick" />
-    <user-content ref="contentEl" @add-user="handleAddUser" />
-    <user-modal ref="userModalEl" />
+    <user-content ref="contentEl" @add-user="handleAddUser" @edit-user="handleEditUser" />
+    <user-modal ref="userModalEl" @add-user="handleAddUserModal" @edit-user="handleEditUserModal" />
   </div>
 </template>
 
@@ -27,6 +27,19 @@ function searchClick(form: any) {
 function handleAddUser() {
   console.log(userModalEl.value);
   userModalEl.value?.setVisible();
+}
+
+function handleEditUser(row: any) {
+  console.log(row);
+  userModalEl.value?.setVisible(false, row);
+}
+
+function handleAddUserModal() {
+  contentEl.value?.fetchUserList();
+}
+
+function handleEditUserModal() {
+  contentEl.value?.fetchUserList();
 }
 </script>
 

@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { formatUtc } from "@/utils/format";
 import { ref } from "vue";
 
-const emits = defineEmits(["addUser"]);
+const emits = defineEmits(["addUser", "editUser"]);
 const systemStore = useSystemStore();
 const { usersList, usersCount } = storeToRefs(systemStore);
 const currentPage = ref(1);
@@ -35,6 +35,10 @@ function handleDeleteClick(id: number, scope: any) {
 
 function newBtnClick() {
   emits("addUser");
+}
+
+function handleEditClick(row: any) {
+  emits("editUser", row);
 }
 
 function fetchUserList(form: any = {}) {
@@ -93,7 +97,9 @@ defineExpose({
           <template #default="scope">
             <el-row>
               <el-col :span="12">
-                <el-button text type="primary" icon="Edit">修改</el-button>
+                <el-button text type="primary" icon="Edit" @click="handleEditClick(scope.row)"
+                  >修改
+                </el-button>
               </el-col>
               <el-col :span="12">
                 <el-button

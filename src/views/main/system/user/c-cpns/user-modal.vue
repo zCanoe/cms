@@ -2,11 +2,13 @@
 import { reactive, ref } from "vue";
 import useMainStore from "@/store/main/main";
 import { storeToRefs } from "pinia";
+import { useSystemStore } from "@/store/main/system/system";
 
 const mainStore = useMainStore();
+const systemStore = useSystemStore();
 const { entireDepartments, entireRoles } = storeToRefs(mainStore);
 const centerDialogVisible = ref<boolean>(false);
-const formData = reactive({
+let formData = reactive({
   name: "",
   realname: "",
   password: "",
@@ -14,9 +16,41 @@ const formData = reactive({
   roleId: "",
   departmentId: "",
 });
+const isNew = ref(true);
+const emits = defineEmits(["addUser", "editUser"]);
 
-function setVisible() {
+function setVisible(
+  newModal: boolean = true,
+  data: any = {
+    name: "",
+    realname: "",
+    password: "",
+    cellphone: "",
+    roleId: "",
+    departmentId: "",
+  },
+) {
+  isNew.value = newModal;
+  formData = reactive(JSON.parse(JSON.stringify(data)));
   centerDialogVisible.value = true;
+}
+
+async function handleConfirmClick() {
+  centerDialogVisible.value = false;
+  if (isNew.value) {
+    await systemStore.newUserDataAction(formData);
+    emits("addUser");
+  } else {
+    await systemStore.editUserAction(formData!.id, {
+      name: formData.name,
+      realname: formData.realname,
+      password: formData.password,
+      cellphone: formData.cellphone,
+      roleId: formData.roleId,
+      departmentId: formData.departmentId,
+    });
+    emits("editUser");
+  }
 }
 
 defineExpose({
@@ -35,7 +69,7 @@ defineExpose({
           <el-form-item label="真实姓名" prop="realname">
             <el-input v-model="formData.realname" placeholder="请输入真实姓名"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
+          <el-form-item v-if="isNew" label="密码" prop="password">
             <el-input v-model="formData.password" placeholder="请输入密码" show-password></el-input>
           </el-form-item>
           <el-form-item label="电话号码" prop="cellphone">
@@ -60,7 +94,7 @@ defineExpose({
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="centerDialogVisible = false">确认</el-button>
+          <el-button type="primary" @click="handleConfirmClick">确认</el-button>
         </div>
       </template>
     </el-dialog>

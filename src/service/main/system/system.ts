@@ -13,3 +13,18 @@ export function deleteUserByid(id: number) {
     method: "delete",
   });
 }
+
+export function newUserAdd(data: any) {
+  return hyRequest.post({
+    url: "/users",
+    data,
+  });
+}
+
+export function editUserData(id: number, data: any) {
+  return hyRequest.request({
+    url: `/users/${id}`,
+    method: "patch",
+    data,
+  });
+}
