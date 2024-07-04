@@ -28,3 +28,32 @@ export function editUserData(id: number, data: any) {
     data,
   });
 }
+
+export function postPageListData(data: any, page: string) {
+  return hyRequest.post({
+    url: `/${page}/list`,
+    data,
+  });
+}
+
+export function deletePageByid(id: number, page: string) {
+  return hyRequest.request({
+    url: `/${page}/${id}`,
+    method: "delete",
+  });
+}
+
+export function newPageAdd(data: any, page: string) {
+  return hyRequest.post({
+    url: `/${page}`,
+    data,
+  });
+}
+
+export function editPageData(id: number, data: any, page) {
+  return hyRequest.request({
+    url: `/${page}/${id}`,
+    method: "patch",
+    data,
+  });
+}

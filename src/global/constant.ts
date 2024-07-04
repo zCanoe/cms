@@ -3,7 +3,8 @@ interface ICrumbs {
   path: string;
 }
 
-type searchConfig = {
+export type searchConfig = {
+  pageName: string;
   name: string;
   prop: string;
   type: string;
@@ -11,3 +12,16 @@ type searchConfig = {
   placeholder?: string;
   option?: Array<{ label: string; value: any }>;
 }[];
+
+export type contentConfig = {
+  pageName: string;
+  title: string;
+  newBtn: string;
+  tableConfig: {
+    type?: string;
+    width?: string;
+    prop?: string;
+    slotName?: string;
+    label: string;
+  }[];
+};

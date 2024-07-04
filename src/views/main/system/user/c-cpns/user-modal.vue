@@ -60,7 +60,12 @@ defineExpose({
 
 <template>
   <div class="userModal">
-    <el-dialog v-model="centerDialogVisible" title="新建用户" width="30%" align-center>
+    <el-dialog
+      v-model="centerDialogVisible"
+      :title="isNew ? '新建用户' : '编辑用户'"
+      width="30%"
+      align-center
+    >
       <div class="form">
         <el-form v-model="formData" size="large" label-width="80">
           <el-form-item label="用户名" prop="name">

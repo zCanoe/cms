@@ -1,10 +1,11 @@
 <script setup lang="ts" await>
 import { reactive, ref } from "vue";
 import type { ElForm } from "element-plus";
+import type { searchConfig } from "@/global/constant";
 
 const emits = defineEmits(["searchClick", "resetClick"]);
 const props = defineProps<{
-  searchConfig: searchConfig;
+  searchConfigs: searchConfig;
 }>();
 // 此处如果用 elForm 会触发bug
 const elForms = ref<InstanceType<typeof ElForm>>();
@@ -12,7 +13,7 @@ const elForms = ref<InstanceType<typeof ElForm>>();
 const searchForm = reactive(
   JSON.parse(
     JSON.stringify(
-      props.searchConfig.reduce((pre, cur) => {
+      props.searchConfigs.reduce((pre, cur) => {
         pre[cur.name] = "";
         console.log(pre, cur.name);
         return pre;
@@ -36,7 +37,7 @@ function handleSearchClick() {
   <div class="search">
     <el-form ref="elForms" :model="searchForm" label-width="80px" size="large">
       <el-row :gutter="20">
-        <template v-for="(item, j) in searchConfig" :key="j">
+        <template v-for="(item, j) in searchConfigs" :key="j">
           <el-col v-if="item.type === 'input'" :span="8">
             <el-form-item :label="item.label" :prop="item.prop">
               <el-input v-model="searchForm[item.name]" :placeholder="item.placeholder" />
