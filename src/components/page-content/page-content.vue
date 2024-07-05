@@ -5,7 +5,7 @@ import { formatUtc } from "@/utils/format";
 import { ref } from "vue";
 import type { contentConfig } from "@/global/constant";
 
-const emits = defineEmits(["addUser", "editUser"]);
+const emits = defineEmits(["addPage", "editPage"]);
 const props = defineProps<contentConfig>();
 const systemStore = useSystemStore();
 const { pageList, pageCount } = storeToRefs(systemStore);
@@ -36,11 +36,11 @@ function handleDeleteClick(id: number, scope: any) {
 }
 
 function newBtnClick() {
-  emits("addUser");
+  emits("addPage");
 }
 
 function handleEditClick(row: any) {
-  emits("editUser", row);
+  emits("editPage", row);
 }
 
 function fetchPageList(form: any = {}) {

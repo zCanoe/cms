@@ -25,3 +25,14 @@ export type contentConfig = {
     label: string;
   }[];
 };
+
+export type modalConfig = {
+  pageName: string;
+  title: string;
+  formConfig: {
+    label: string;
+    prop: string;
+    placeholder: string;
+    slotName?: string;
+  }[];
+};

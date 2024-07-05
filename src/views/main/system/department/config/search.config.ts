@@ -1,4 +1,4 @@
-import type { searchConfig, contentConfig } from "@/global/constant";
+import type { searchConfig, contentConfig, modalConfig } from "@/global/constant";
 
 const searchConfigs: searchConfig = [
   {
@@ -54,6 +54,29 @@ export const contentConfigs: contentConfig = {
     {
       type: "handle",
       label: "操作",
+    },
+  ],
+};
+
+export const modalConfigs: modalConfig = {
+  pageName: "department",
+  title: "部门",
+  formConfig: [
+    {
+      label: "部门名称",
+      prop: "name",
+      placeholder: "请输入部门名称",
+    },
+    {
+      label: "部门领导",
+      prop: "leader",
+      placeholder: "请输入部门领导",
+    },
+    {
+      label: "上级部门",
+      prop: "parentId",
+      placeholder: "请选择上级部门",
+      slotName: "parentId",
     },
   ],
 };
