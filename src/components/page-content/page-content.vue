@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { formatUtc } from "@/utils/format";
 import { ref } from "vue";
 import type { contentConfig } from "@/global/constant";
+import { getPermission } from "@/hooks/usePermission";
 
 const emits = defineEmits(["addPage", "editPage"]);
 const props = defineProps<contentConfig>();
@@ -11,6 +12,7 @@ const systemStore = useSystemStore();
 const { pageList, pageCount } = storeToRefs(systemStore);
 const currentPage = ref(1);
 const pageSize = ref<number>(10);
+const { isCreate, isDelete, isQuery, isUpdate } = getPermission(props.pageName);
 fetchPageList();
 
 function createAtFormatter(e) {
@@ -44,6 +46,7 @@ function handleEditClick(row: any) {
 }
 
 function fetchPageList(form: any = {}) {
+  if (!isQuery) return;
   systemStore.getPageList(
     {
       size: pageSize.value,
@@ -66,7 +69,7 @@ defineExpose({
           <h3>{{ title }}</h3>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary" @click="newBtnClick">{{ newBtn }}</el-button>
+          <el-button v-if="isCreate" type="primary" @click="newBtnClick">{{ newBtn }}</el-button>
         </el-col>
       </el-row>
     </div>
@@ -80,12 +83,18 @@ defineExpose({
             <template v-else-if="item.type === 'handle'" #default="scope">
               <el-row>
                 <el-col :span="12">
-                  <el-button text type="primary" icon="Edit" @click="handleEditClick(scope.row)"
+                  <el-button
+                    v-if="isUpdate"
+                    text
+                    type="primary"
+                    icon="Edit"
+                    @click="handleEditClick(scope.row)"
                     >修改
                   </el-button>
                 </el-col>
                 <el-col :span="12">
                   <el-button
+                    v-if="isDelete"
                     text
                     type="danger"
                     icon="Delete"

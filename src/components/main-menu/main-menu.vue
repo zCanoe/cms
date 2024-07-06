@@ -4,6 +4,7 @@ import router from "@/router";
 import { computed, ref } from "vue";
 import { mapPathToMenu } from "@/utils/map-menus";
 import { useRoute, useRouter } from "vue-router";
+import { getPermission } from "@/hooks/usePermission";
 
 defineProps({
   isCollapse: {

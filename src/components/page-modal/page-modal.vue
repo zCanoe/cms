@@ -3,6 +3,7 @@ import { reactive, ref } from "vue";
 import { useSystemStore } from "@/store/main/system/system";
 import type { modalConfig } from "@/global/constant";
 import type { ElForm } from "element-plus";
+import { getPermission } from "@/hooks/usePermission";
 
 const systemStore = useSystemStore();
 const centerDialogVisible = ref<boolean>(false);

@@ -26,11 +26,14 @@ export const useLoginStore = defineStore("login", {
       const userInfoRes: any = await getUserInfoById(Number(id));
       this.userInfo = userInfoRes.data;
 
-      const usrMenuRes: any = await getUserMenuById(this.userInfo.id);
+      const usrMenuRes: any = await getUserMenuById(this.userInfo.role.id);
       this.userMenu = usrMenuRes.data;
 
       // 根据所返回的菜单中的url去匹配生成动态路由
       mapMenuToRouter(this.userMenu).forEach((item) => router.addRoute("main", item));
+
+      const mainStore = useMainStore();
+      mainStore.getEntireRolesAndDepartmentsAction();
 
       await router.push("/main");
     },

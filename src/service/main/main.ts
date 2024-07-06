@@ -1,22 +1,19 @@
 import hyRequest from "@/service";
 
-export function getEntireRoles(data: any = {}) {
+export function getEntireRoles() {
   return hyRequest.post({
     url: "/role/list",
-    data,
   });
 }
 
-export function getEntireDepartments(data: any = {}) {
+export function getEntireDepartments() {
   return hyRequest.post({
     url: "/department/list",
-    data,
   });
 }
 
-export function getEntireMenus(data: any = {}) {
+export function getEntireMenus() {
   return hyRequest.post({
     url: "/menu/list",
-    data,
   });
 }

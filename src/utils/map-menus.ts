@@ -80,3 +80,20 @@ export function mapMenuListToIds(menuList: any[]) {
   dp(menuList);
   return ids;
 }
+
+export function mapMenusToPermission(menuList: any[]) {
+  const res: string[] = [];
+
+  function db(menus: any[]) {
+    for (const menu of menus) {
+      if (menu.children && menu.type !== 3) {
+        db(menu.children);
+      } else if (!menu.children && menu.type === 3) {
+        res.push(menu?.permission);
+      } else return;
+    }
+  }
+
+  db(menuList);
+  return res;
+}
