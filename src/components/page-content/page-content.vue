@@ -71,7 +71,7 @@ defineExpose({
       </el-row>
     </div>
     <div class="table">
-      <el-table :data="pageList" border>
+      <el-table :data="pageList" v-bind="childrenTree" border>
         <template v-for="(item, index) in tableConfig" :key="index">
           <el-table-column align="center" v-bind="item">
             <template v-if="item.slotName" #default="scope">

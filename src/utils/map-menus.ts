@@ -1,4 +1,6 @@
 import type { RouteRecordRaw } from "vue-router";
+import type { ICrumbs } from "@/global/constant";
+import { toRaw } from "vue";
 
 export let firstMenu: any = null;
 
@@ -61,4 +63,20 @@ export function mapPathToCrumb(path: string, userMenu: []) {
   });
 
   return crumbs;
+}
+
+export function mapMenuListToIds(menuList: any[]) {
+  // console.log(toRaw(menuList));
+  if (!menuList) return [-1];
+  const ids: number[] = [];
+
+  function dp(menus: any[]) {
+    for (const menu of menus) {
+      if (menu.children) dp(menu.children);
+      else ids.push(menu.id);
+    }
+  }
+
+  dp(menuList);
+  return ids;
 }

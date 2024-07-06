@@ -25,7 +25,9 @@ let formData = reactive(
 function setVisible(newModal: boolean = true, data: any = null) {
   isNew.value = newModal;
   editData.value = {};
-  elFormEl.value?.resetFields();
+  for (const f in formData) {
+    formData[f] = "";
+  }
   if (data && !isNew.value) {
     editData.value = data;
     for (const f in formData) {

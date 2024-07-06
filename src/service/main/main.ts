@@ -13,3 +13,10 @@ export function getEntireDepartments(data: any = {}) {
     data,
   });
 }
+
+export function getEntireMenus(data: any = {}) {
+  return hyRequest.post({
+    url: "/menu/list",
+    data,
+  });
+}

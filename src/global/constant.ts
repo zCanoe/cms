@@ -1,4 +1,4 @@
-interface ICrumbs {
+export interface ICrumbs {
   name: string;
   path: string;
 }
@@ -17,6 +17,13 @@ export type contentConfig = {
   pageName: string;
   title: string;
   newBtn: string;
+  childrenTree?: {
+    rowKey: string;
+    treeProps: {
+      children: string;
+      hasChildren: boolean;
+    };
+  };
   tableConfig: {
     type?: string;
     width?: string;
